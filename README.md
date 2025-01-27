@@ -55,13 +55,18 @@
             font-weight: bold;
             color: #333;
             user-select: none;
-            animation: floatMessage 10s ease-in-out infinite;
         }
 
-        @keyframes floatMessage {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-20px); opacity: 0.5; }
-            100% { transform: translateY(0); opacity: 1; }
+        .left-side {
+            left: 10vw;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .right-side {
+            right: 10vw;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .background {
@@ -105,14 +110,17 @@
         });
 
         function displayMessages() {
-            for (let i = 0; i < 20; i++) {
-                const message = document.createElement('div');
-                message.classList.add('message');
-                message.style.top = `${Math.random() * 100}vh`;
-                message.style.left = `${Math.random() * 100}vw`;
-                message.textContent = "Hello Chandre";
-                body.appendChild(message);
-            }
+            // Create "Hello Chandre" on the left side
+            const leftMessage = document.createElement('div');
+            leftMessage.classList.add('message', 'left-side');
+            leftMessage.textContent = "Hello Chandre";
+            body.appendChild(leftMessage);
+
+            // Create "Hello Chandre" on the right side
+            const rightMessage = document.createElement('div');
+            rightMessage.classList.add('message', 'right-side');
+            rightMessage.textContent = "Hello Chandre";
+            body.appendChild(rightMessage);
         }
 
         function removeMessages() {
