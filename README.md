@@ -82,6 +82,26 @@
             z-index: -1;
         }
 
+        .firework {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff0;
+            border-radius: 50%;
+            animation: firework 1s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
         .hidden {
             display: none;
         }
@@ -115,17 +135,54 @@
             leftMessage.classList.add('message', 'left-side');
             leftMessage.textContent = "Hello Chandre";
             body.appendChild(leftMessage);
+            
+            // Create fireworks from the left message
+            createFireworks(leftMessage, 'left');
 
             // Create "Hello Chandre" on the right side
             const rightMessage = document.createElement('div');
             rightMessage.classList.add('message', 'right-side');
             rightMessage.textContent = "Hello Chandre";
             body.appendChild(rightMessage);
+            
+            // Create fireworks from the right message
+            createFireworks(rightMessage, 'right');
         }
 
         function removeMessages() {
             const messages = document.querySelectorAll('.message');
             messages.forEach(msg => msg.remove());
+            const fireworks = document.querySelectorAll('.firework');
+            fireworks.forEach(fw => fw.remove());
+        }
+
+        function createFireworks(message, side) {
+            const fireworkCount = 15;
+            const maxDistance = 120;
+            const messageRect = message.getBoundingClientRect();
+            const centerX = messageRect.left + messageRect.width / 2;
+            const centerY = messageRect.top + messageRect.height / 2;
+
+            // Create fireworks particles
+            for (let i = 0; i < fireworkCount; i++) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                body.appendChild(firework);
+
+                // Calculate random distance and direction
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * maxDistance;
+                const xOffset = Math.cos(angle) * distance;
+                const yOffset = Math.sin(angle) * distance;
+
+                // Position the fireworks at the message center and animate them outward
+                firework.style.left = `${centerX}px`;
+                firework.style.top = `${centerY}px`;
+
+                // Use CSS custom properties to define the movement (to be used in the animation)
+                firework.style.setProperty('--x', `${xOffset}px`);
+                firework.style.setProperty('--y', `${yOffset}px`);
+            }
         }
     </script>
 </body>
