@@ -86,9 +86,8 @@
             position: absolute;
             width: 8px;
             height: 8px;
-            background-color: #ff0;
             border-radius: 50%;
-            animation: firework 1s ease-out forwards;
+            animation: firework 1s ease-out infinite;
         }
 
         @keyframes firework {
@@ -157,7 +156,7 @@
         }
 
         function createFireworks(message, side) {
-            const fireworkCount = 15;
+            const fireworkCount = 20;
             const maxDistance = 120;
             const messageRect = message.getBoundingClientRect();
             const centerX = messageRect.left + messageRect.width / 2;
@@ -168,6 +167,9 @@
                 const firework = document.createElement('div');
                 firework.classList.add('firework');
                 body.appendChild(firework);
+
+                // Randomly generate a color
+                firework.style.backgroundColor = getRandomColor();
 
                 // Calculate random distance and direction
                 const angle = Math.random() * Math.PI * 2;
@@ -183,6 +185,16 @@
                 firework.style.setProperty('--x', `${xOffset}px`);
                 firework.style.setProperty('--y', `${yOffset}px`);
             }
+        }
+
+        // Function to generate random color for fireworks
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
     </script>
 </body>
