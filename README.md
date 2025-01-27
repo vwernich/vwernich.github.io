@@ -80,6 +80,7 @@
             background-position: center;
             opacity: 0.3;
             z-index: -1;
+            display: none; /* Hide the background initially */
         }
 
         .firework {
@@ -107,7 +108,7 @@
     </style>
 </head>
 <body>
-    <div class="background"></div>
+    <div class="background" id="background"></div>
     <button class="button" id="pushMeBtn">Push me</button>
     <button class="exit-button" id="exitBtn">Exit</button>
 
@@ -115,16 +116,19 @@
         const pushMeBtn = document.getElementById('pushMeBtn');
         const exitBtn = document.getElementById('exitBtn');
         const body = document.body;
+        const background = document.getElementById('background');
 
         pushMeBtn.addEventListener('click', () => {
             pushMeBtn.classList.add('hidden');
             exitBtn.classList.remove('hidden');
+            background.style.display = 'block';  // Show the background
             displayMessages();
         });
 
         exitBtn.addEventListener('click', () => {
             exitBtn.classList.add('hidden');
             pushMeBtn.classList.remove('hidden');
+            background.style.display = 'none';  // Hide the background
             removeMessages();
         });
 
